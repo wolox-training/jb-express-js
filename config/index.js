@@ -45,6 +45,9 @@ const config = {
       packageVersion: process.env.PACKAGE_VERSION || 'X-Package-Version',
       nodeVersion: process.env.NODE_VERSION || 'X-Node-Version'
     }
+  },
+  geekJokes: {
+    url: 'https://geek-jokes.sameerkumar.website/api2'
   }
 };
 
