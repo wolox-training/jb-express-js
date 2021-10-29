@@ -1,6 +1,7 @@
 const axios = require('axios');
 const logger = require('../logger');
 const config = require('../../config');
+const { serviceError } = require('../errors');
 
 const geekJokes = async () => {
   try {
@@ -13,7 +14,7 @@ const geekJokes = async () => {
     }).data;
   } catch (e) {
     logger.info(e);
-    return Promise.reject(e);
+    throw serviceError(e.message);
   }
 };
 
