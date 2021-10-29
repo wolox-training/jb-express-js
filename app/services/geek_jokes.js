@@ -13,7 +13,7 @@ const geekJokes = async () => {
       }
     }).data;
   } catch (e) {
-    logger.info(e);
+    logger.error(e.message);
     throw serviceError(e.message);
   }
 };
