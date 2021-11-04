@@ -9,10 +9,10 @@ exports.users = async (req, res) => {
   user.pass = passEncrypted;
   try {
     await insertUser(user);
-    logger.info(`User registered with name: ${user.name}`);
-    res.status(201).send(`User registered with name: ${user.name}`);
+    logger.info(`New user was created with name: ${user.name}`);
+    res.status(201).send(`New user was created with name: ${user.name}`);
   } catch (e) {
-    logger.error(`User with name: ${user.name}, could not be registered`);
+    logger.error(`User with name: ${user.name}, could not be created`);
     logger.error(e);
     throw databaseError(e.message);
   }
