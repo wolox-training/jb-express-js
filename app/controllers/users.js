@@ -10,7 +10,7 @@ exports.users = async (req, res) => {
   try {
     await insertUser(user);
     logger.info(`User registered with name: ${user.name}`);
-    res.status(200).send(`User registered with name: ${user.name}`);
+    res.status(201).send(`User registered with name: ${user.name}`);
   } catch (e) {
     logger.error(`User with name: ${user.name}, could not be registered`);
     logger.error(e);
