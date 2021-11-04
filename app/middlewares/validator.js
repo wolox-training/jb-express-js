@@ -7,6 +7,7 @@ const ajv = new Ajv({ allErrors: true });
 
 ajv.addFormat('woloxEmail', {
   validate: mail => {
+    logger.info('Validating email in Wolox format');
     const domains = ['wolox.com.ar', 'wolox.co', 'wolox.cl'];
     const mailDomain = mail.split('@');
     if (!mailDomain[1]) return false;
