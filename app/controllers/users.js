@@ -2,8 +2,9 @@ const logger = require('../logger');
 const { encryptPass } = require('../helpers/users');
 const { insertUser } = require('../services/users');
 const { databaseError } = require('../errors');
+const { DB_CONNECTION } = require('../../config/constants/errorMessages');
 
-exports.users = async (req, res) => {
+exports.users = async (req, res, next) => {
   const user = req.body;
   const passEncrypted = await encryptPass(user.pass);
   user.pass = passEncrypted;
@@ -14,6 +15,6 @@ exports.users = async (req, res) => {
   } catch (e) {
     logger.error(`User with name: ${user.name}, could not be created`);
     logger.error(e);
-    throw databaseError(e.message);
+    next(databaseError(DB_CONNECTION));
   }
 };
