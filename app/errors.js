@@ -11,3 +11,9 @@ exports.defaultError = message => internalError(message, exports.DEFAULT_ERROR);
 
 exports.SERVICE_ERROR = 'service_error';
 exports.serviceError = message => internalError(message, exports.SERVICE_ERROR);
+
+exports.VALIDATE_ERROR = 'validate_error';
+exports.validateError = message => internalError(message, exports.VALIDATE_ERROR);
+
+exports.ENCRYPT_ERROR = 'encrypt_error';
+exports.encryptError = message => internalError(message, exports.ENCRYPT_ERROR);
