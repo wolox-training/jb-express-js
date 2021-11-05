@@ -10,11 +10,7 @@ module.exports = {
   mail: {
     type: 'string',
     example: 'pepito@wolox.com.ar',
-    enum: [
-      '...@wolox.com-ar',
-      '...@wolox.co',
-      '...@wolox.cl'
-    ]
+    enum: ['...@wolox.com-ar', '...@wolox.co', '...@wolox.cl']
   },
   pass: {
     type: 'string',
