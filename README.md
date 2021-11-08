@@ -135,6 +135,10 @@ This project is maintained by [Wolox](https://github.com/wolox) and it was writt
 
 ![Wolox](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)
 
+## Badges
+
+![test workflow](https://github.com/wolox-training/jb-express-js/blob/.github/workflows/test-action.yml/badge.svg)
+
 ## License
 
 **WTraining** is available under the MIT [license](LICENSE.md).
