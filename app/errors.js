@@ -17,3 +17,6 @@ exports.validateError = message => internalError(message, exports.VALIDATE_ERROR
 
 exports.ENCRYPT_ERROR = 'encrypt_error';
 exports.encryptError = message => internalError(message, exports.ENCRYPT_ERROR);
+
+exports.TOKEN_ERROR = 'token_error';
+exports.tokenError = message => internalError(message, exports.TOKEN_ERROR);
