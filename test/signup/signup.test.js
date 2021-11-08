@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../../app');
+const { findUserByEmail } = require('../../app/services/users');
 
 describe('Tests sign up', () => {
   const user = {
@@ -13,8 +14,12 @@ describe('Tests sign up', () => {
     await request(app)
       .post('/users')
       .send(user)
-      .expect(201);
-    return done();
+      .expect(201)
+      .expect(async () => {
+        const mailFound = await findUserByEmail(user.mail);
+        if (!mailFound.length) return done(new Error());
+        return done();
+      });
   });
   test('Email already exists', async done => {
     await request(app)
