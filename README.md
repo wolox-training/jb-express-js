@@ -137,7 +137,7 @@ This project is maintained by [Wolox](https://github.com/wolox) and it was writt
 
 ## Badges
 
-![test workflow](https://github.com/wolox-training/jb-express-js/blob/.github/workflows/test-action.yml/badge.svg)
+![test workflow](https://github.com/wolox-training/jb-express-js/actions/workflows/test-action.yml/badge.svg/badge.svg)
 
 ## License
 
