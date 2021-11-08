@@ -14,12 +14,13 @@ describe('Tests sign up', () => {
     await request(app)
       .post('/users')
       .send(user)
-      .expect(201)
-      .expect(async () => {
-        const mailFound = await findUserByEmail(user.mail);
-        if (!mailFound.length) return done(new Error());
-        return done();
-      });
+      .expect(201);
+
+    const mailFound = await findUserByEmail(user.mail);
+    expect(mailFound.length).toBe(1);
+    expect(mailFound[0].dataValues.name).toEqual(user.name);
+    expect(mailFound[0].dataValues.last_name).toEqual(user.last_name);
+    return done();
   });
   test('Email already exists', async done => {
     await request(app)
