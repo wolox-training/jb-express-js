@@ -35,5 +35,42 @@ module.exports = {
         }
       }
     }
+  },
+  '/users/sessions': {
+    post: {
+      tags: ['CRUD operations'],
+      description: 'Sign In',
+      operationId: 'signin',
+      parameters: [],
+      requestBody: {
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/UserLogin'
+            }
+          }
+        },
+        required: true
+      },
+      responses: {
+        200: {
+          description: 'Token was generated'
+        },
+        400: {
+          description: 'Invalid parameters',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Error'
+              },
+              example: {
+                message: 'User´s email not exists',
+                internal_code: 'invalid_parameters'
+              }
+            }
+          }
+        }
+      }
+    }
   }
 };

@@ -32,5 +32,16 @@ module.exports = {
         $ref: '#/components/schemas/pass'
       }
     }
+  },
+  UserLogin: {
+    type: 'object',
+    properties: {
+      mail: {
+        $ref: '#/components/schemas/mail'
+      },
+      pass: {
+        $ref: '#/components/schemas/pass'
+      }
+    }
   }
 };
