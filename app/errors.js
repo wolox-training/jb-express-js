@@ -21,5 +21,5 @@ exports.encryptError = message => internalError(message, exports.ENCRYPT_ERROR);
 exports.TOKEN_ERROR = 'token_error';
 exports.tokenError = message => internalError(message, exports.TOKEN_ERROR);
 
-exports.COMPARE_ERROR = 'compare_error';
-exports.compareError = message => internalError(message, exports.COMPARE_ERROR);
+exports.AUTHENTICATION_ERROR = 'authentication_error';
+exports.authenticationError = message => internalError(message, exports.AUTHENTICATION_ERROR);

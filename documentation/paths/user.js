@@ -69,6 +69,20 @@ module.exports = {
               }
             }
           }
+        },
+        401: {
+          description: 'Authentication error',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Error'
+              },
+              example: {
+                message: 'Password does not match, try again.',
+                internal_code: 'authentication_error'
+              }
+            }
+          }
         }
       }
     }
