@@ -15,3 +15,5 @@ exports.encryptPass = pass => {
 };
 
 exports.generateToken = user => jwt.sign(user, config.common.secretPass, { expiresIn: '2h' });
+
+exports.comparePass = (pass, passEncrypted) => bcrypt.compare(pass, passEncrypted);

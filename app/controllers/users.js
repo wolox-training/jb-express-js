@@ -1,8 +1,9 @@
 const logger = require('../logger');
-const { encryptPass, generateToken } = require('../helpers/users');
+const { encryptPass, generateToken, comparePass } = require('../helpers/users');
 const { insertUser } = require('../services/users');
-const { databaseError, tokenError } = require('../errors');
-const { DB_CONNECTION, GENERATE_TOKEN } = require('../../config/constants/errorMessages');
+const { databaseError, tokenError, compareError } = require('../errors');
+const { findUserByEmail } = require('../services/users');
+const { DB_CONNECTION, GENERATE_TOKEN, COMPARE_PASS } = require('../../config/constants/errorMessages');
 
 exports.signUp = async (req, res, next) => {
   const user = req.body;
@@ -19,9 +20,17 @@ exports.signUp = async (req, res, next) => {
   }
 };
 
-exports.signIn = (req, res, next) => {
+exports.signIn = async (req, res, next) => {
   try {
-    const token = generateToken(req.body);
+    const mailFound = await findUserByEmail(req.body.mail);
+    const validatePass = await comparePass(req.body.pass, mailFound[0].pass);
+    if (!validatePass) next(compareError(COMPARE_PASS));
+    const payload = {
+      name: mailFound[0].name,
+      last_name: mailFound[0].last_name,
+      mail: req.body.mail
+    };
+    const token = generateToken(payload);
     logger.info(`Successful login. Token: ${token}`);
     res.status(200).send({ token });
   } catch (e) {
