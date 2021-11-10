@@ -3,8 +3,9 @@ const { encryptPass } = require('../helpers/users');
 const { insertUser } = require('../services/users');
 const { databaseError } = require('../errors');
 const { DB_CONNECTION } = require('../../config/constants/errorMessages');
+const { createToken } = require('../interactor/users');
 
-exports.users = async (req, res, next) => {
+exports.signUp = async (req, res, next) => {
   const user = req.body;
   const passEncrypted = await encryptPass(user.pass);
   user.pass = passEncrypted;
@@ -16,5 +17,16 @@ exports.users = async (req, res, next) => {
     logger.error(`User with name: ${user.name}, could not be created`);
     logger.error(e);
     next(databaseError(DB_CONNECTION));
+  }
+};
+
+exports.signIn = async (req, res, next) => {
+  try {
+    const token = await createToken(req.body);
+    logger.info(`Successful login. Token: ${token}`);
+    res.status(200).send({ token });
+  } catch (e) {
+    logger.error(e);
+    next(e);
   }
 };

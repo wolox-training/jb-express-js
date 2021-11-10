@@ -21,7 +21,7 @@ const checkMailExists = async (schema, data, next) => {
   try {
     const mailFound = await findUserByEmail(data);
     logger.info('User found:', mailFound);
-    return !mailFound.length;
+    return schema.schema === 'signUp' ? !mailFound.length : mailFound.length;
   } catch (e) {
     logger.error(e.message);
     return next(databaseError(DB_CONNECTION));
@@ -48,7 +48,25 @@ const schemaSignUp = {
     mail: {
       type: 'string',
       format: 'woloxEmail',
-      mailExists: { table: 'users' }
+      mailExists: { schema: 'signUp' }
+    },
+    pass: {
+      type: 'string',
+      minLength: 8
+    }
+  },
+  additionalProperties: false
+};
+
+const schemaSignIn = {
+  $async: true,
+  type: 'object',
+  required: ['mail', 'pass'],
+  properties: {
+    mail: {
+      type: 'string',
+      format: 'woloxEmail',
+      mailExists: { schema: 'signIn' }
     },
     pass: {
       type: 'string',
@@ -59,3 +77,4 @@ const schemaSignUp = {
 };
 
 exports.signUpValidate = ajv.compile(schemaSignUp);
+exports.signInValidate = ajv.compile(schemaSignIn);
