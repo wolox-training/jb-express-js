@@ -21,9 +21,12 @@ exports.signUp = async (req, res, next) => {
 };
 
 exports.signIn = async (req, res, next) => {
-  const token = await createToken(req, next);
-  if (token) {
+  try {
+    const token = await createToken(req.body);
     logger.info(`Successful login. Token: ${token}`);
     res.status(200).send({ token });
+  } catch (e) {
+    logger.error(e);
+    next(e);
   }
 };
