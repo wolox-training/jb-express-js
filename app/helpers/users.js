@@ -17,3 +17,10 @@ exports.encryptPass = pass => {
 exports.generateToken = user => jwt.sign(user, config.common.secretPass, { expiresIn: '2h' });
 
 exports.comparePass = (pass, passEncrypted) => bcrypt.compare(pass, passEncrypted);
+
+exports.getPagination = (data, page, limit) => {
+  const { count: totalUsers, rows: users } = data;
+  const currentPage = page ? Number(page) : 0;
+  const totalPages = Math.ceil(totalUsers / limit);
+  return { totalUsers, users, totalPages, currentPage };
+};
