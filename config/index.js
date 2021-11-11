@@ -50,7 +50,8 @@ const config = {
     passEncrypt: {
       saltRounds: 10
     },
-    secretPass: 'Wolox2021'
+    secretPass: 'Wolox2021',
+    expiresIn: '2h'
   },
   geekJokes: {
     url: 'https://geek-jokes.sameerkumar.website/api2'

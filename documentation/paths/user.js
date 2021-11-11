@@ -1,5 +1,64 @@
 module.exports = {
   '/users': {
+    get: {
+      tags: ['CRUD operations'],
+      description: 'Get users',
+      operationId: 'getUsers',
+      parameters: [
+        {
+          name: 'page',
+          in: 'query',
+          schema: {
+            type: 'integer',
+            default: 0
+          },
+          required: false
+        },
+        {
+          name: 'size',
+          in: 'query',
+          schema: {
+            type: 'integer',
+            default: 10
+          },
+          required: false
+        },
+        {
+          name: 'token',
+          in: 'header',
+          schema: {
+            type: 'string'
+          },
+          required: true
+        }
+      ],
+      responses: {
+        200: {
+          description: 'Users were obtained',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Users'
+              }
+            }
+          }
+        },
+        401: {
+          description: 'Authentication error',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Error'
+              },
+              example: {
+                message: 'jwt must be provided',
+                internal_code: 'authentication_error'
+              }
+            }
+          }
+        }
+      }
+    },
     post: {
       tags: ['CRUD operations'],
       description: 'Create user',

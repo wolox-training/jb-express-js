@@ -43,5 +43,16 @@ module.exports = {
         $ref: '#/components/schemas/pass'
       }
     }
+  },
+  Users: {
+    type: 'object',
+    properties: {
+      users: {
+        type: 'array',
+        items: {
+          $ref: '#/components/schemas/User'
+        }
+      }
+    }
   }
 };
