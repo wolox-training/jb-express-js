@@ -1,12 +1,11 @@
 const request = require('supertest');
+const helper = require('../../app/helpers/users');
+const { createUser } = require('../factory/factory_users');
+
+const mockToken = jest.spyOn(helper, 'decodeToken');
 const app = require('../../app');
 
-describe('Tests sign in', () => {
-  const paginationQuery = {
-    page: '0',
-    zise: '3'
-  };
-
+describe('Tests to get all users', () => {
   const user = {
     name: 'pepito',
     last_name: 'Perez',
@@ -14,30 +13,30 @@ describe('Tests sign in', () => {
     pass: 'PassPepit0'
   };
 
-  const login = {
-    mail: 'pepito@wolox.co',
-    pass: 'PassPepit0'
+  const paginationQuery = {
+    page: '1',
+    zise: '1'
   };
 
-  test('Successful transaction', async done => {
-    await request(app)
-      .post('/users')
-      .send(user)
-      .expect(201);
+  afterEach(() => {
+    mockToken.mockRestore();
+  });
 
-    const logInData = await request(app)
-      .post('/users/sessions')
-      .send(login)
-      .expect(200);
+  test('Successful transaction', async done => {
+    // Se crea un usuario
+    await createUser(user);
+    mockToken.mockImplementation(() => user);
 
     await request(app)
       .get('/users')
       .query(paginationQuery)
-      .set({ token: logInData.body.token })
+      .set({ token: 'tokenInvalid' })
       .expect(200);
 
+    expect(mockToken).toHaveBeenCalled();
     return done();
   });
+
   test('Token invalid', async done => {
     const tokenInvalid = 'tokenDePepito';
     await request(app)

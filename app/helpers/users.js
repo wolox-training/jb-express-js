@@ -19,17 +19,4 @@ exports.generateToken = user =>
 
 exports.comparePass = (pass, passEncrypted) => bcrypt.compare(pass, passEncrypted);
 
-exports.getPagination = (page, size) => {
-  const limit = size || config.common.database.limit;
-  const offset = page ? page * limit : config.common.database.offset;
-  return { limit, offset };
-};
-
-exports.getPaginData = (data, page, limit) => {
-  const { count: totalUsers, rows: users } = data;
-  const currentPage = page ? Number(page) : 0;
-  const totalPages = Math.ceil(totalUsers / limit);
-  return { totalUsers, users, totalPages, currentPage };
-};
-
 exports.decodeToken = token => jwt.verify(token, config.common.secretPass);
