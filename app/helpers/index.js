@@ -1,4 +1,3 @@
-const logger = require('../logger');
 const config = require('../../config/').common;
 
 exports.getPagination = (page, size) => {
