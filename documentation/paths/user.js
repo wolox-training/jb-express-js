@@ -145,5 +145,68 @@ module.exports = {
         }
       }
     }
+  },
+  '/admin/users': {
+    post: {
+      tags: ['CRUD operations'],
+      description: 'Create admin user',
+      operationId: 'createAdminUser',
+      parameters: [
+        {
+          name: 'token',
+          in: 'header',
+          schema: {
+            type: 'string'
+          },
+          required: true
+        }
+      ],
+      requestBody: {
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/User'
+            }
+          }
+        },
+        required: true
+      },
+      responses: {
+        201: {
+          description: 'New user was created with role admin'
+        },
+        200: {
+          description: 'user.role was upadated'
+        },
+        400: {
+          description: 'Invalid parameters',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Error'
+              },
+              example: {
+                message: 'pass must NOT have fewer than 8 characters',
+                internal_code: 'invalid_parameters'
+              }
+            }
+          }
+        },
+        401: {
+          description: 'Authentication error',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Error'
+              },
+              example: {
+                message: 'Unauthorized user',
+                internal_code: 'authentication_error'
+              }
+            }
+          }
+        }
+      }
+    }
   }
 };
