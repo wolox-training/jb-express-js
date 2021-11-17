@@ -1,48 +1,38 @@
 const request = require('supertest');
+const { infoUsers } = require('./info_users');
 const app = require('../../app');
 
 describe('Tests sign in', () => {
-  const user = {
-    name: 'pepito',
-    last_name: 'Perez',
-    mail: 'pepito@wolox.co',
-    pass: 'PassPepit0'
-  };
-
-  const login = {
-    mail: 'pepito@wolox.co',
-    pass: 'PassPepit0'
-  };
-
   test('Successful sign in', async done => {
     await request(app)
       .post('/users')
-      .send(user)
+      .send(infoUsers.basicUser)
       .expect(201);
 
     await request(app)
       .post('/users/sessions')
-      .send(login)
+      .send(infoUsers.login)
       .expect(200);
     return done();
   });
   test('Email not exists', async done => {
     await request(app)
       .post('/users/sessions')
-      .send(login)
+      .send(infoUsers.login)
       .expect(400);
     return done();
   });
   test('Pass does not match', async done => {
     await request(app)
       .post('/users')
-      .send(user)
+      .send(infoUsers.basicUser)
       .expect(201);
 
-    login.pass = 'invalidPassPepito';
+    const loginIncorrect = infoUsers.login;
+    loginIncorrect.pass = 'invalidPassPepito';
     await request(app)
       .post('/users/sessions')
-      .send(login)
+      .send(loginIncorrect)
       .expect(401);
     return done();
   });
