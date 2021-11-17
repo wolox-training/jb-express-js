@@ -14,6 +14,9 @@ exports.encryptPass = pass => {
   }
 };
 
-exports.generateToken = user => jwt.sign(user, config.common.secretPass, { expiresIn: '2h' });
+exports.generateToken = user =>
+  jwt.sign(user, config.common.secretPass, { expiresIn: config.common.expiresIn });
 
 exports.comparePass = (pass, passEncrypted) => bcrypt.compare(pass, passEncrypted);
+
+exports.decodeToken = token => jwt.verify(token, config.common.secretPass);

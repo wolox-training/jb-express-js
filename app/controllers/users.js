@@ -1,6 +1,7 @@
 const logger = require('../logger');
 const { encryptPass } = require('../helpers/users');
-const { insertUser } = require('../services/users');
+const { getPagination, getPaginData } = require('../helpers');
+const { insertUser, findAllUsers } = require('../services/users');
 const { databaseError } = require('../errors');
 const { DB_CONNECTION } = require('../../config/constants/errorMessages');
 const { createToken } = require('../interactor/users');
@@ -28,5 +29,18 @@ exports.signIn = async (req, res, next) => {
   } catch (e) {
     logger.error(e);
     next(e);
+  }
+};
+
+exports.getAllUsers = async (req, res, next) => {
+  try {
+    const { page, size } = req.query;
+    const { limit, offset } = getPagination(page, size);
+    const users = await findAllUsers(limit, offset);
+    const response = getPaginData(users, page, limit, offset);
+    res.status(200).send(response);
+  } catch (e) {
+    logger.error(e);
+    next(databaseError(DB_CONNECTION));
   }
 };

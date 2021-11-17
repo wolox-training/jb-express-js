@@ -29,7 +29,9 @@ const config = {
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
       username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD
+      password: process.env.DB_PASSWORD,
+      offset: 0,
+      limit: 10
     },
     api: {
       bodySizeLimit: process.env.API_BODY_SIZE_LIMIT,
@@ -48,7 +50,8 @@ const config = {
     passEncrypt: {
       saltRounds: 10
     },
-    secretPass: 'Wolox2021'
+    secretPass: 'Wolox2021',
+    expiresIn: '2h'
   },
   geekJokes: {
     url: 'https://geek-jokes.sameerkumar.website/api2'

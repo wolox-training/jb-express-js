@@ -7,7 +7,7 @@ exports.validateRequest = schemaValidate => async (req, res, next) => {
     logger.info('Successful validation');
     return next();
   } catch (e) {
-    logger.error('Validations error:', e.errors);
+    logger.error('Validations error:', e);
     return next(validateError(e.errors));
   }
 };
