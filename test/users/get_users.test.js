@@ -18,14 +18,10 @@ describe('Tests to get all users', () => {
     zise: '1'
   };
 
-  afterEach(() => {
-    mockToken.mockRestore();
-  });
-
   test('Successful transaction', async done => {
     // Se crea un usuario
     await createUser(user);
-    mockToken.mockImplementation(() => user);
+    mockToken.mockImplementationOnce(() => user);
 
     await request(app)
       .get('/users')

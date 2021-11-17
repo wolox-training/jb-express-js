@@ -44,3 +44,12 @@ exports.getAllUsers = async (req, res, next) => {
     next(databaseError(DB_CONNECTION));
   }
 };
+
+exports.signUpAdmin = (req, res, next) => {
+  try {
+    logger.info('Exitoso');
+    res.status(200).send('holi');
+  } catch (e) {
+    next(e);
+  }
+};
