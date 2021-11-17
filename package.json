@@ -22,6 +22,7 @@
     "migrations": "sequelize db:migrate",
     "migrations-test": "NODE_ENV=testing sequelize db:migrate",
     "migrations-down": "sequelize db:migrate:undo",
+    "migrations-down-test": "NODE_ENV=testing sequelize db:migrate:undo",
     "start": "node server.js",
     "seed": "sequelize db:seed:all",
     "create-seed": "sequelize seed:generate --name"
