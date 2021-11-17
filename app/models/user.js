@@ -1,3 +1,5 @@
+const { ROLE } = require('../../config/constants/users_constants');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'users',
@@ -25,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       pass: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+      role: {
+        type: DataTypes.ENUM,
+        values: [ROLE.basic, ROLE.admin],
+        allowNull: false,
+        defaultValue: ROLE.basic
       }
     },
     {

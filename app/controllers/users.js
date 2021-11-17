@@ -1,9 +1,10 @@
 const logger = require('../logger');
 const { encryptPass } = require('../helpers/users');
 const { getPagination, getPaginData } = require('../helpers');
-const { insertUser, findAllUsers } = require('../services/users');
+const { insertUser, findUserByEmail, findAllUsers, updateUser } = require('../services/users');
 const { databaseError } = require('../errors');
 const { DB_CONNECTION } = require('../../config/constants/errorMessages');
+const { USER_EXISTS, ROLE, CHANGE_ROLE, ROLE_CHANGED } = require('../../config/constants/users_constants');
 const { createToken } = require('../interactor/users');
 
 exports.signUp = async (req, res, next) => {
@@ -45,11 +46,33 @@ exports.getAllUsers = async (req, res, next) => {
   }
 };
 
-exports.signUpAdmin = (req, res, next) => {
+exports.signUpAdmin = async (req, res, next) => {
+  const user = req.body;
+  const passEncrypted = await encryptPass(user.pass);
+  user.pass = passEncrypted;
+
   try {
-    logger.info('Exitoso');
-    res.status(200).send('holi');
+    const userFound = await findUserByEmail(user.mail);
+    if (userFound.length) {
+      if (userFound[0].dataValues.role === ROLE.basic) {
+        logger.info(CHANGE_ROLE);
+        const dataToUpdate = { role: ROLE.admin };
+        const condition = { where: { id: userFound[0].dataValues.id } };
+        await updateUser(dataToUpdate, condition);
+        logger.info(ROLE_CHANGED);
+        return res.status(200).send({ message: ROLE_CHANGED });
+      } else if (userFound[0].dataValues.role === ROLE.admin) {
+        logger.info(USER_EXISTS);
+        return res.status(200).send({ message: USER_EXISTS });
+      }
+    }
+
+    if (!user.role) user.role = ROLE.admin;
+    await insertUser(user);
+    logger.info(`New user was created with role: ${ROLE.admin}`);
+    return res.status(201).send({ message: `New user was created with role: ${ROLE.admin}` });
   } catch (e) {
-    next(e);
+    logger.error(e);
+    return next(databaseError(DB_CONNECTION));
   }
 };

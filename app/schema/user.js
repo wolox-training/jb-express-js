@@ -2,7 +2,7 @@ const ajv = require('../schema');
 const logger = require('../logger');
 const { databaseError } = require('../errors');
 const { findUserByEmail } = require('../services/users');
-const { DOMAINS } = require('../../config/constants/users_constants');
+const { DOMAINS, ROLE } = require('../../config/constants/users_constants');
 const { DB_CONNECTION } = require('../../config/constants/errorMessages');
 
 ajv.addFormat('woloxEmail', {
@@ -47,16 +47,29 @@ const schemaSignUp = {
     },
     mail: {
       type: 'string',
-      format: 'woloxEmail',
-      mailExists: { schema: 'signUp' }
+      format: 'woloxEmail'
     },
     pass: {
       type: 'string',
       minLength: 8
+    },
+    role: {
+      type: 'string'
     }
   },
   additionalProperties: false
 };
+
+const signUpBasic = JSON.parse(JSON.stringify(schemaSignUp));
+signUpBasic.properties.mail.mailExists = { schema: 'signUp' };
+signUpBasic.properties.role.enum = [ROLE.basic];
+
+exports.signUpBasicValidate = ajv.compile(signUpBasic);
+
+const signUpAdmin = JSON.parse(JSON.stringify(schemaSignUp));
+signUpAdmin.properties.role.enum = [ROLE.admin];
+
+exports.signUpAdminValidate = ajv.compile(signUpAdmin);
 
 const schemaSignIn = {
   $async: true,
@@ -76,5 +89,4 @@ const schemaSignIn = {
   additionalProperties: false
 };
 
-exports.signUpValidate = ajv.compile(schemaSignUp);
 exports.signInValidate = ajv.compile(schemaSignIn);

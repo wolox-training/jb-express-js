@@ -1,4 +1,5 @@
 'use strict';
+const { ROLE } = require('../../config/constants/users_constants');
 
 module.exports = {
   up: (queryInterface, Sequelize) =>
@@ -25,6 +26,11 @@ module.exports = {
       },
       pass: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      role: {
+        type: Sequelize.ENUM,
+        values: [ROLE.basic, ROLE.admin],
         allowNull: false
       }
     }),
