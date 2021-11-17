@@ -9,5 +9,5 @@ exports.init = app => {
   app.get('/users', [authenticator], getAllUsers);
   app.post('/users', [validateRequest(signUpBasicValidate)], signUp);
   app.post('/users/sessions', [validateRequest(signInValidate)], signIn);
-  app.post('/admin/users', [validateRequest(signUpAdminValidate)], signUpAdmin);
+  app.post('/admin/users', [validateRequest(signUpAdminValidate), authenticator], signUpAdmin);
 };
