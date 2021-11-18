@@ -4,7 +4,6 @@ const { createUser } = require('../factory/factory_users');
 const { infoUsers } = require('./info_users');
 const { findUserByEmail } = require('../../app/services/users');
 const { ROLE } = require('../../config/constants/users_constants');
-const { ADMIN_USERS } = require('../../config/constants/routes');
 
 const mockToken = jest.spyOn(helper, 'decodeToken');
 const app = require('../../app');
@@ -19,7 +18,7 @@ describe('Tests admin users', () => {
     mockToken.mockImplementationOnce(() => infoUsers.adminUser);
 
     await request(app)
-      .post(ADMIN_USERS)
+      .post('/admin/users')
       .send(infoUsers.newAdminUser)
       .set({ token: 'token' })
       .expect(201);
@@ -37,7 +36,7 @@ describe('Tests admin users', () => {
     mockToken.mockImplementationOnce(() => infoUsers.adminUser);
 
     await request(app)
-      .post(ADMIN_USERS)
+      .post('/admin/users')
       .send(infoUsers.basicUser)
       .set({ token: 'token' })
       .expect(200);
@@ -53,7 +52,7 @@ describe('Tests admin users', () => {
     mockToken.mockImplementationOnce(() => infoUsers.adminUser);
 
     await request(app)
-      .post(ADMIN_USERS)
+      .post('/admin/users')
       .send(infoUsers.newAdminUser)
       .set({ token: 'token' })
       .expect(200);
@@ -66,7 +65,7 @@ describe('Tests admin users', () => {
   });
   test('Left required params', async done => {
     await request(app)
-      .post(ADMIN_USERS)
+      .post('/admin/users')
       .send({})
       .expect(400);
     return done();

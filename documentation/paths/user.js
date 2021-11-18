@@ -200,8 +200,22 @@ module.exports = {
                 $ref: '#/components/schemas/Error'
               },
               example: {
-                message: 'Unauthorized user',
+                message: 'Invalid token',
                 internal_code: 'authentication_error'
+              }
+            }
+          }
+        },
+        403: {
+          description: 'Forbidden',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Error'
+              },
+              example: {
+                message: "Unauthorized user",
+                internal_code: "authorization_error"
               }
             }
           }

@@ -1,16 +1,15 @@
 'use strict';
-const { encryptPass } = require('../app/helpers/users');
-const { ROLE } = require('../config/constants/users_constants');
 
 module.exports = {
-  up: async queryInterface =>
+  up: queryInterface =>
     queryInterface.bulkInsert('users', [
       {
         name: 'Admin',
         last_name: 'Wolox',
         mail: 'admin@wolox.co',
-        pass: await encryptPass('passAdmin123'),
-        role: ROLE.admin
+        // pass: 'passAdmin123',
+        pass: '$2b$10$iSka8yave1qx1De3VADvxOGEHf7lk6O61t1eO6CJzjgj03JvvMgFG',
+        role: 'admin'
       }
     ]),
 
