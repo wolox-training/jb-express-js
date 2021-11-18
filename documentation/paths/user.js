@@ -214,8 +214,8 @@ module.exports = {
                 $ref: '#/components/schemas/Error'
               },
               example: {
-                message: "Unauthorized user",
-                internal_code: "authorization_error"
+                message: 'Unauthorized user',
+                internal_code: 'authorization_error'
               }
             }
           }
