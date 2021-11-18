@@ -1,10 +1,9 @@
 const logger = require('../logger');
-const { generateToken, comparePass } = require('../helpers/users');
+const { generateToken, comparePass, encryptPass } = require('../helpers/users');
 const { findUserByEmail, insertUser, updateUser } = require('../services/users');
 const { tokenError, authenticationError, databaseErrorrror } = require('../errors');
 const { GENERATE_TOKEN, AUTHENTICATION, DB_CONNECTION } = require('../../config/constants/errorMessages');
 const { USER_EXISTS, ROLE, CHANGE_ROLE, ROLE_CHANGED } = require('../../config/constants/users_constants');
-const { encryptPass } = require('../helpers/users');
 
 exports.createToken = async infoLogin => {
   try {
