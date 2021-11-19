@@ -1,31 +1,21 @@
 const request = require('supertest');
 const helper = require('../../app/helpers/users');
 const { createUser } = require('../factory/factory_users');
+const { infoUsers } = require('./info_users');
 
 const mockToken = jest.spyOn(helper, 'decodeToken');
 const app = require('../../app');
 
 describe('Tests to get all users', () => {
-  const user = {
-    name: 'pepito',
-    last_name: 'Perez',
-    mail: 'pepito@wolox.co',
-    pass: 'PassPepit0'
-  };
-
   const paginationQuery = {
     page: '1',
-    zise: '1'
+    size: '1'
   };
-
-  afterEach(() => {
-    mockToken.mockRestore();
-  });
 
   test('Successful transaction', async done => {
     // Se crea un usuario
-    await createUser(user);
-    mockToken.mockImplementation(() => user);
+    await createUser(infoUsers.basicUser);
+    mockToken.mockImplementationOnce(() => infoUsers.basicUser);
 
     await request(app)
       .get('/users')

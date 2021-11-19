@@ -22,8 +22,12 @@
     "migrations": "sequelize db:migrate",
     "migrations-test": "NODE_ENV=testing sequelize db:migrate",
     "migrations-down": "sequelize db:migrate:undo",
+    "migrations-down-test": "NODE_ENV=testing sequelize db:migrate:undo",
     "start": "node server.js",
     "seed": "sequelize db:seed:all",
+    "seed-undo": "sequelize db:seed:undo",
+    "seed-test": "NODE_ENV=testing sequelize db:seed:all",
+    "seed-undo-test": "NODE_ENV=testing sequelize db:seed:undo",
     "create-seed": "sequelize seed:generate --name"
   },
   "cacheDirectories": [

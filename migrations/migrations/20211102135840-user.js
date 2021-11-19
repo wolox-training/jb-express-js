@@ -26,6 +26,11 @@ module.exports = {
       pass: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      role: {
+        type: Sequelize.ENUM,
+        values: ['basic', 'admin'],
+        allowNull: false
       }
     }),
 
